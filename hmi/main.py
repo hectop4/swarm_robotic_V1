@@ -10,6 +10,14 @@ from PyQt5.QtGui import QKeyEvent
 from PyQt5.QtCore import Qt
 import threading
 from PyQt5.QtWebEngineWidgets import QWebEngineView
+import csv
+
+csv_file = "data.csv"
+
+with open(csv_file, 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Temp1', 'Hum1', 'Temp2', 'Hum2', 'Lat1','Long1', 'Lat2', 'Lon2'])
+
 
 class myApp(QMainWindow):
     def __init__(self):
@@ -204,6 +212,11 @@ class myApp(QMainWindow):
             self.hum2=list(np.linspace(0,0,100))
 
             print(Exception)
+        #* Guardar datos en nueva fila del archivo csv
+        with open(csv_file, mode='a') as file:
+            writer = csv.writer(file)
+            writer.writerow([data_dict['T1'], data_dict['H1'], data_dict['T2'], data_dict['H2'], data_dict['La1'], data_dict['Lo1'], data_dict['La2'], data_dict['Lo2']])
+        
 
             
 def split_data(date):
